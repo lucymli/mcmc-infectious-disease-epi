@@ -1,0 +1,12 @@
+- Class: meta
+  Course: mcmc-infectious-disease-epi
+  Lesson: 00Introduction
+  Author: Lucy M. Li
+  Type: Standard
+  Organization: Harvard T.H. Chan School of Public Health
+  Version: 2.4.3
+
+
+- Class: text
+  Output: >
+            Welcome to the class on Markov Chain Monte Carlo Methods in Infectious Disease Epidemiology
