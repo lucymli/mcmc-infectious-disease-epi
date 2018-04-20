@@ -9,4 +9,11 @@
 
 - Class: text
   Output: >
-            Welcome to the class on Markov Chain Monte Carlo Methods in Infectious Disease Epidemiology
+            Welcome to the class on Markov chain Monte Carlo Methods in 
+            Infectious Disease Epidemiology
+
+- Class: text
+  Output: >
+            Today, you will build on information from previous classes on 
+            Bayesian statistics, mathematical modeling, and 
+            
