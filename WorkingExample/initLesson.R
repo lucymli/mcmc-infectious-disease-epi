@@ -4,11 +4,8 @@
       # throughout the lesson.
 
 open_mcmc_file <- function () {
-  file.edit("02WorkingExample/scripts/script-MHmcmc.R")
+  file.edit("WorkingExample/scripts/MHmcmc.R")
 }
 
-data("influenza_england_1978_school", package="outbreaks")
-flu_parameters <- c(beta=0.5/760, gamma=1/7)
-flu_data <- influenza_england_1978_school$in_bed
-flu_initial_states <- c(S=763-3, I=3, R=0)
-
+load("WorkingExample/initial.RData")
+load("WorkingExample/flu_plots.RData")
