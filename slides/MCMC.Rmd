@@ -1,0 +1,317 @@
+---
+title: "Introduction to MCMC"
+short-title: "MCMC"
+author: "Lucy M. Li, PhD" 
+date: "May 9 & 11, 2018" 
+output: 
+  beamer_presentation: 
+    theme: "PaloAlto" 
+    colortheme: "default" 
+    toc: true 
+---
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE)
+library(ggplot2)
+library(ggforce)
+library(magrittr)
+library(dplyr)
+library(gridExtra)
+library(xtable)
+library(expm)
+```
+
+# Introduction
+
+## Parameter estimation
+
+- Important epidemiological parameters help to inform public health policies aiming to control, prevent, and eliminate infectious diseases
+
+
+### How can we estimate parameters?
+
+1. Identify relevant **parameters** e.g. $R_0$, vaccine efficacy, duration of
+infection
+
+2. Formulate mathematical **model** that describes disease
+transmission and characterizes the relationship between parameters and
+observations
+
+3. Estimate parameter values by **fitting** models to data
+
+
+## Challenges of model fitting
+
+- Incomplete data
+- Temporally correlated data
+- Multiple parameters need to be estimated at the same time
+- Often no analytical solution to likelihood functions or posterior distributions
+
+### How can Markov chain Monte Carlo help?
+
+- An inference framework that is particularly useful for Bayesian analyses by approximating the posterior distribution through sampling
+- Efficient algorithm to explore parameter space
+- Enables imputation of missing data and parameter estimation at the same time
+- Flexible framework that works with a variety of data including time-series data and phylogenetic data
+
+
+## Examples of MCMC in literature
+
+- Hopefully you'll understand these sentences by the end of the class!
+
+### Fraser et al (2009) \emph{Science.}: an early analysis of pandemic H1N1
+
+'In a Bayesian framework, the joint posterior distribution of the "real" number of cases $M_t$ for $t = 1$ to $T$ and of the individual reproduction number $R_t$ for $t = 1$ to $T$ is explored via Markov Chain Monte Carlo sampling'
+
+### Morton and Finkenstadt (2005) \emph{Applied Statistics.}: analysis of measles
+
+'To estimate all parameters and states simultaneously of the model...we use MCMC sampling. This involves simulation from the joint posterior density by setting up a Markov chain whose stationary distribution is equal to this target posterior density.'
+
+### Bhatt et al () \emph{Nature.}: estimating global burden of dengue
+
+'The entire model was fitted separately for apparent and inapparent infection incidences, with missing inapparent to apparent ratio values imputed in the MCMC.'
+
+# Theory
+
+## An analogy for MCMC
+
+An
+
+## Markov chain
+
+### Components
+
+1. A series of random variables $X_{t=0},...,X_{t=T}$ with values in state space $S = \{s_1,...,s_n\}$.
+2. Transition probabilities are described by $\mathbf{M}=\{m_{ij}\}$ where $m_{ij}=Pr(X_{t+1}=s_j|X_{t}=s_i)$, and $m_{ij} \geq0$ for all $i,j$.
+3. Initial probability distribution of state values is defined by $\nu^{(0)}$, where $\nu^{(0)}_i = Pr(X_0=s_i)$.
+
+### Key Markovian property
+
+Probabilities state values at time $t+1$ only depends on the state value at the previous time step $t$:
+
+$Pr(X_{t+1}=s_j | X_t) = Pr(X_{t+1}=s_j|X_t,X_{t-1},...,X_0)$
+
+### Stationary distribution
+
+Some Markov chains have a stationary distribution $\nu^{(n)}$ such that $\nu^{(n)} = \nu^{(n)}M^n$ as $n\rightarrow \infty$.
+
+## Markov chain: modeling the weather
+
+### Components
+
+1. Weather on consecutive days $X_{t=0},...,X_{t=T}$ with values in state space $S = \{s_1=\text{Sunny},s_2=\text{Cloudy},s_3=\text{Rainy}\}$.
+2. Transition probabilities are described by $\mathbf{M}=\{m_{ij}\}$
+
+```{r, weather-matrix, results='asis'}
+weather_matrix <- matrix(c(0.55, 0.35, 0.1, 
+                           0.3, 0.4, 0.3, 
+                           0.2, 0.4, 0.4),
+                         nrow=3, byrow=TRUE)
+print_matrix <- function (raw_matrix, exponent="") {
+  matrix_str <- apply(raw_matrix, 1, function (x) paste(formatC(x, format='f', flag='0', digits=2), collapse=" & "))
+  cat(paste0("$\\mathbf{M}^{", exponent, "}$ = \\bordermatrix{~ & \\text{\\small{Sunny}} & \\text{\\small{Cloudy}} & \\text{\\small{Rainy}} \\cr ", 
+           paste(c("\\text{\\small{Sunny}} &", "\\text{\\small{Cloudy}} &", "\\text{\\small{Rainy}} &"), matrix_str, collapse=" \\cr ")
+           , "}"))
+}
+print_matrix(weather_matrix)
+```
+
+3. Initial probability distribution of weather is defined by $\nu^{(0)} = \bordermatrix{~ & {} \cr \text{\small{Sunny}} & \frac{1}{3} \cr \text{\small{Cloudy}} & \frac{1}{3} \cr \text{\small{Rainy}} & \frac{1}{3} \cr }$.
+
+### Key Markovian property
+
+Weather on day $t$ depends only on weather on day $t-1$ and not any previous time points.
+
+## Markov chain: modeling the weather
+
+Stationary distribution of Markov Chains $\pi$
+
+What is $M^t$ as $t \rightarrow \infty$? $M^2 = M\cdot M$
+
+```{r weather_matrix_sq, results='asis'}
+print_matrix(weather_matrix %*% weather_matrix, 2)
+```
+
+$$
+\begin{aligned}
+M_{ij}^2 &= Pr(X_{t+1}=j | X_{t-1}=i) \\
+&=\sum_{k=1}^n Pr(X_{t+1}=j|X_{t} = k) \cdot Pr(X_t=k|X_{t-1}=i)
+\end{aligned}
+$$
+
+
+## Stationary distribution of Markov Chains $\pi$
+
+
+```{r weather_matrix_cubed, results='asis'}
+print_matrix((weather_matrix %*% weather_matrix) %*% weather_matrix, 3)
+```
+
+```{r weather_matrix_4, results='asis'}
+print_matrix(weather_matrix %^% 4, 4)
+```
+
+## Markov chain
+
+### Markov chain Monte Carlo
+
+- In MCMC algorithms, we take advantage of this property by using the stationary distribution $\nu^{(n)}$ to estimate probability distributions of interest such as the posterior distribution $P(\theta | D)$)
+
+
+## Overview of MCMC
+
+1. Initialize parameter values $\theta_{\text{init}}$.
+2. Propose a new parameter values $\theta_{\text{new}}$ given $\theta_{\text{init}}$.
+3. Accept or reject the new values probabilistically based on prior and likelihood.
+4. If $\theta_{\text{new}}$ is accepted, set $\theta_{\text{init}}:=\theta_{\text{new}}$.
+5. Repeat steps 2-4 until sufficient samples of $\theta$ have been obtained.
+
+## Animation
+
+https://chi-feng.github.io/mcmc-demo/app.html#RandomWalkMH,standard
+
+# Interpretation
+
+## Summarizing parameter estimates
+
+- Maximum a posteriori probability (MAP) estimate is the **mode** of the samples from the posterior distribution
+- More common to report the **median** or **mean**
+
+```{r point-estimate-plot, fig.width=3.5, fig.height=1.25}
+nrep <- 1e5
+example_posterior_samples <- list()
+set.seed(93838)
+example_posterior_samples$Normal <- rnorm(nrep, 0, 2.6)
+example_posterior_samples$Gamma <- rgamma(nrep, 2.5, 0.5)
+example_posterior_samples$Exponential <- rexp(nrep, 0.2)
+example_posterior_samples$Multimodal <- c(rnorm(round(nrep*0.2), 3.5, 1.2), rnorm(round(nrep*0.8), -3.5, 1.2))
+example_posterior_samples_df <- 
+  mapply(data.frame, value=example_posterior_samples, 
+       distribution=as.list(names(example_posterior_samples)), 
+       SIMPLIFY=FALSE) %>%
+  do.call(what=rbind)
+example_posterior_samples_df_summary <- 
+  group_by(example_posterior_samples_df, distribution) %>% 
+  summarise(Mean=mean(value), Median=median(value),
+            MAP=density(value)$x[which.max(density(value)$y)],
+            sd=sd(value), lower.quantile=quantile(value, 0.025), 
+         upper.quantile=quantile(value, 0.975), 
+         lower.hpd=coda::HPDinterval(coda::mcmc(value))[1], 
+         upper.hpd=coda::HPDinterval(coda::mcmc(value))[2])
+posterior_summary_plot_base <- ggplot(example_posterior_samples_df) + theme_classic() +
+  geom_density(aes(x=value), fill="gray85", alpha=.75) +
+  facet_wrap(~distribution, nrow=1, scales="free_x") +
+  xlab(bquote(paste("Posterior estimate of ", theta))) +
+  ylab("Density") +
+  theme(axis.text=element_blank(), axis.ticks=element_blank(),
+        panel.border=element_rect(colour="black", fill=NA, size=1),
+        strip.background=element_rect(fill="wheat2"))
+posterior_summary_plot_base +
+  geom_vline(data=reshape2::melt(example_posterior_samples_df_summary, 
+                                 measure.vars=c("Mean", "Median", "MAP"),
+                                 variable.name="Estimator:"), 
+             aes(xintercept=value, colour=`Estimator:`)) +
+  geom_point(data=reshape2::melt(example_posterior_samples_df_summary, 
+                                 measure.vars=c("Mean", "Median", "MAP"),
+                                 variable.name="Estimator:"), 
+             aes(x=value, colour=`Estimator:`, y=as.numeric(`Estimator:`)/30)) +
+  theme(legend.position="top") +
+  scale_colour_manual(values=c("#d747ab", "#008750", "#dd961c"))
+```
+
+
+## Quantifying uncertainty
+
+- Standard deviation - doesn't account for skew
+- Quantile interval - captures uncertainty of over-dispersed distribution better than the SD, but may over-estimate the size of the credible interval
+- 95\% highest posterior density (HPD) region useful for non-Gaussian posterior distribution
+
+
+
+
+
+# Working example
+
+
+## Code
+
+Use Swirl
+
+
+
+# Practical considerations
+
+## Parameter transformations
+
+- positivity (log)
+- bounds (logit)
+
+## Burn-in period
+
+- At the beginning, the chain samples from the prior
+
+## Convergence diagnostics
+
+- Start multiple chains and use Gelman-Rubins diagnostic
+- Check autocorrelation plot
+- Cannot be completely sure that the chain has not converged to a local minimum
+- VISUAL CHECK!!!!
+
+## Proposal distribution
+
+- Adaptive MCMC
+
+- Joint proposal distribution
+
+## Initialization
+
+- Multiple chains starting at different points
+- Latin-hypercube sampling
+
+## Multi-modal distribution
+
+- Often occurs when parameters are correlated
+
+## Computational
+
+- Thinning to store a subset of sampled values, because chain is auto-correlated
+- Debugging: run with just the prior distribution to check that the chain is sampling from the posterior
+
+
+# Conclusions
+
+
+
+## Further reading - More theoretical papers/books on MCMC in epidemiology
+
+- Metropolis et al (1953) Equation of State Calculations by Fast Computing Machines. \emph{J. Chem. Phys.}
+
+- Hastings (1970) Monte Carlo Sampling Methods Using Markov Chains and Their Applications. \emph{Biometrika}.
+
+- Gilks et al (1995) MCMC in practice - Brooks et al (2011) Handbook of MCMC
+
+- Gibson and Renshaw (1998)
+
+- O'Neill and Roberts (1999)
+
+- O'Neill (2002) A tutorial introduction to Bayesian inference for stochastic
+epidemic models using Markov chain Monte Carlo methods - Statistical inference
+in a stochastic epidemic SEIR model with control intervention: Ebola as a case
+study
+
+- Morton and Finkenstädt (2005) Discrete time modelling of disease incidence time series by using Markov chain Monte Carlo methods. \emph{Applied Statistics}.
+
+## Further reading - Applications of MCMC to infectious disease epi
+
+- Cauchemez et al (2004) A Bayesian MCMC approach to study transmission of influenza: application to household longitudinal data
+- Fraser et al (2009) Pandemic potential of a strain of influenza A (H1N1): early findings. \emph{Science}. [Most relevant section is in Supporting Online Material Section 2]
+- van Boven et al (2010) Estimation of measles vaccine efficacy and critical vaccination coverage in a highly vaccinated population. \emph{J. R. Soc. Interface}.
+
+
+## Further reading - MCMC in genetics
+
+## Newer developments
+
+
+
+
