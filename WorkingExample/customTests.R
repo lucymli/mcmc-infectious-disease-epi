@@ -12,5 +12,11 @@
       # expression which the user entered, so care must be taken.
 
 test_likelihood <- function () {
-  round(flu_likelihood(flu_params, flu_data, flu_initial_states), 4)==-2223.6649
+  data_env <- new.env()
+  load("../initial.RData", data_env)
+  try({
+    func <- get('flu_likelihood', gobalenv())
+    testing <- identical(round(func(data_env$flu_params, data_env$flu_data, data_env$flu_initial_states), 4), 2223.6649)
+  }, silent=TRUE)
+  exists("testing") && isTRUE("testing")
 }
