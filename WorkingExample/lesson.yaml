@@ -1,0 +1,26 @@
+- Class: meta
+  Course: mcmc-infectious-disease-epi
+  Lesson: WorkingExample
+  Author: Lucy M. Li
+  Type: Standard
+  Organization: Harvard T.H. Chan School of Public Health
+  Version: 2.4.3
+
+
+
+- Class: cmd_question
+  Output: Let's have a look at the Metropolis-Hastings MCMC algorithm. Type open_mcmc_file() into the command line
+  CorrectAnswer: open_mcmc_file()
+  AnswerTests: omnitest(correctExpr='open_mcmc_file()')
+  Hint: Copy and paste
+
+- Class: exact_question
+  Output: On which line is a new value of beta proposed?
+  CorrectAnswer: 17
+  AnswerTests: omnitest(correctVal=17)
+  Hint: Look for lines containing the draws from the normal distribution using function rnorm()
+
+- Class: script
+  Output: Try completing the likelihood function using the rpois() and sum() commands
+  AnswerTests: test_likelihood()
+  Script: script-likelihood.R
