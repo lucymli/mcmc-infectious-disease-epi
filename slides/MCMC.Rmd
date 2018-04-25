@@ -233,6 +233,14 @@ posterior_summary_plot_base +
 # Working example
 
 
+## Preparation
+
+Before the next class, please do the following:
+
+1. Install R Studio if you haven't done so already.
+2. Install the \texttt{swirl} package: Open R Studio, then type \texttt{install.packages("swirl")}).
+3. Install course material from GitHub: Type \texttt{swirl::install_course_github}
+
 ## Code
 
 Use Swirl
