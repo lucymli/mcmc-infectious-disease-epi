@@ -3,9 +3,19 @@
       # the user's working directory and thus be accessible to them
       # throughout the lesson.
 
+.get_course_path <- function(){
+  tryCatch(swirl:::swirl_courses_dir(),
+           error = function(c) {file.path(find.package("swirl"),"Courses")}
+  )
+}
+
 open_mcmc_file <- function () {
   file.edit("scripts/MHmcmc.R")
 }
 
-load("initial.RData")
-load("flu_plots.RData")
+base_path <- file.path(.get_course_path(), "mcmc-infectious-disease-epi", "WorkingExample")
+
+base_env <- new.env()
+
+load(paste0(base_path, "/initial.RData"), base_env)
+load(paste0(base_path, "/flu_plots.RData"), base_env)
