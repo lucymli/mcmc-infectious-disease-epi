@@ -14,8 +14,6 @@
 test_likelihood <- function () {
   try({
     func <- get('flu_likelihood', globalenv())
-    browser()
-    SIR <- base_env$SIR
     test_answer <- round(func(base_env$flu_parameters, base_env$flu_data, 
                               base_env$flu_initial_states), 4)
     correct_answer <- round(base_env$flu_likelihood(base_env$flu_parameters, base_env$flu_data, 
