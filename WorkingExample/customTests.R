@@ -12,13 +12,13 @@
       # expression which the user entered, so care must be taken.
 
 test_likelihood <- function () {
-  data_env <- base_env
   try({
     func <- get('flu_likelihood', globalenv())
-    test_answer <- round(func(data_env$flu_parameters, data_env$flu_data, 
-                              data_env$flu_initial_states), 4)
-    correct_answer <- round(data_env$flu_likelihood(data_env$flu_parameters, data_env$flu_data, 
-                                                    data_env$flu_initial_states), 4)
+    SIR <- base_env$SIR
+    test_answer <- round(func(base_env$flu_parameters, base_env$flu_data, 
+                              base_env$flu_initial_states), 4)
+    correct_answer <- round(base_env$flu_likelihood(base_env$flu_parameters, base_env$flu_data, 
+                                                    base_env$flu_initial_states), 4)
     testing <- identical(test_answer, correct_answer)
   }, silent=TRUE)
   exists("testing") && isTRUE(testing)
