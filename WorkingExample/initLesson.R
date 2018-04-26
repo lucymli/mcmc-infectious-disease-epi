@@ -9,11 +9,11 @@
   )
 }
 
-open_mcmc_file <- function () {
-  file.edit("scripts/MHmcmc.R")
-}
-
 base_path <- file.path(.get_course_path(), "mcmc-infectious-disease-epi", "WorkingExample")
+
+open_mcmc_file <- function () {
+  file.edit(paste0(base_path, "/scripts/MHmcmc.R"))
+}
 
 base_env <- new.env()
 
