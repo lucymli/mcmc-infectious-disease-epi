@@ -24,4 +24,4 @@
   Output: Let's try completing the likelihood function. I just opened an R script containing the partially completed likelihood function. Follow the instructions in the script comments.\nWhen you are ready to submit, save the script and then type submit().\nIf you want to start over, type reset().
   AnswerTests: test_likelihood()
   Hint: Follow the directions in the script. You might need the dpois() and sum() functions.
-  Script: script-likelihood.R
+  Script: likelihood.R

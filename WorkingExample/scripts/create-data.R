@@ -10,6 +10,19 @@ source("MHmcmc.R")
 source("likelihood-correct.R")
 source("prior.R")
 
+# SIR model ---------------------------------------------------------------
+
+SIR <- function (t, x, params) {
+  # Used with the ode() function to simulate epidemics according to the
+  # deterministic SIR model
+  with (as.list(c(params, x)), {
+    N <- S + I + R
+    dS <- -beta*S*I
+    dI <- +beta*S*I - gamma*I
+    dR <- gamma*I
+    der <- list(c(dS, dI, dR))
+  })
+}
 
 
 # flu data analysis -------------------------------------------------------

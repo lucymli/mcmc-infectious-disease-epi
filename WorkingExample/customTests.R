@@ -13,10 +13,14 @@
 
 test_likelihood <- function () {
   data_env <- new.env()
-  load("../initial.RData", data_env)
+  load("WorkingExample/initial.RData", data_env)
   try({
-    func <- get('flu_likelihood', gobalenv())
-    testing <- identical(round(func(data_env$flu_params, data_env$flu_data, data_env$flu_initial_states), 4), 2223.6649)
+    func <- get('flu_likelihood', globalenv())
+    test_answer <- round(func(data_env$flu_parameters, data_env$flu_data, 
+                              data_env$flu_initial_states), 4)
+    correct_answer <- round(data_env$flu_likelihood(data_env$flu_parameters, data_env$flu_data, 
+                                                    data_env$flu_initial_states), 4)
+    testing <- identical(test_answer, correct_answer)
   }, silent=TRUE)
-  exists("testing") && isTRUE("testing")
+  exists("testing") && isTRUE(testing)
 }

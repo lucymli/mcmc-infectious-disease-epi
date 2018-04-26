@@ -6,20 +6,6 @@
 
 library(deSolve)
 
-# SIR model ---------------------------------------------------------------
-
-SIR <- function (t, x, params) {
-  # Used with the ode() function to simulate epidemics according to the
-  # deterministic SIR model
-  with (as.list(c(params, x)), {
-    N <- S + I + R
-    dS <- -beta*S*I
-    dI <- +beta*S*I - gamma*I
-    dR <- gamma*I
-    der <- list(c(dS, dI, dR))
-  })
-}
-
 # Likelihood function -----------------------------------------------------
 
 flu_likelihood <- function (params, data, initial_states) {
@@ -33,7 +19,7 @@ flu_likelihood <- function (params, data, initial_states) {
   # expected number of infected individuals I(t) ('expected_I') for a set of 
   # parameters and initial conditions.
   expected_I <- ode(initial_states, times, SIR, params)[, 3]
-  # INSERT LIKELIHOOD CALCULATION BELOW
+  # COMPLETE LIKELIHOOD CALCULATION BELOW (Answer should be log-transformed)
   log_likelihood <- sum(dpois(data, expected_I, log=TRUE))
   return (log_likelihood)
 }
