@@ -7,5 +7,5 @@ open_mcmc_file <- function () {
   file.edit("WorkingExample/scripts/MHmcmc.R")
 }
 
-load("WorkingExample/initial.RData")
-load("WorkingExample/flu_plots.RData")
+load("initial.RData")
+load("flu_plots.RData")
