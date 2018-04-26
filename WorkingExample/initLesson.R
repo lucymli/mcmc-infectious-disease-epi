@@ -4,7 +4,7 @@
       # throughout the lesson.
 
 open_mcmc_file <- function () {
-  file.edit("WorkingExample/scripts/MHmcmc.R")
+  file.edit("scripts/MHmcmc.R")
 }
 
 load("initial.RData")
