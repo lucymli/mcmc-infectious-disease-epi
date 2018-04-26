@@ -12,8 +12,7 @@
       # expression which the user entered, so care must be taken.
 
 test_likelihood <- function () {
-  data_env <- new.env()
-  load("WorkingExample/initial.RData", data_env)
+  data_env <- base_env
   try({
     func <- get('flu_likelihood', globalenv())
     test_answer <- round(func(data_env$flu_parameters, data_env$flu_data, 
