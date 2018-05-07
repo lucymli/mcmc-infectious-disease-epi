@@ -22,3 +22,13 @@ test_likelihood <- function () {
   }, silent=TRUE)
   exists("testing") && isTRUE(testing)
 }
+
+test_prior <- function () {
+  try({
+    func <- get('flu_priors', globalenv())
+    test_answer <- round(func(base_env$flu_parameters), 4)
+    correct_answer <- round(base_env$flu_priors(base_env$flu_parameters), 4)
+    testing <- identical(test_answer, correct_answer)
+  }, silent=TRUE)
+  exists("testing") && isTRUE(testing)
+}
