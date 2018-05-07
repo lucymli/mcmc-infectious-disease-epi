@@ -48,8 +48,8 @@
 
 - Class: cmd_question
   Output: >
-    Now let's try estimating some parameters using MCMC. Copy and paste the following code
-    into the command line 
-    flu_mcmc_output <- MHmcmc(flu_data, flu_initial_states, flu_likelihood, flu_priors, flu_mcmc_options, flu_parameters)
-  AnswerTests: omnitest(correctExpr='flu_mcmc_output <- MHmcmc(flu_data, flu_initial_states, flu_likelihood, flu_priors, flu_mcmc_options, flu_parameters)')
-  Hint: Copy and paste the expression in the question
+    Now let's try estimating some parameters using MCMC. We need 6 pieces of information.
+    Type the following into the command line 
+    mcmc_output <- MHmcmc(flu_data, initial_states, likelihood_function, prior_function, mcmc_options, initial_parameters)
+  AnswerTests: omnitest(correctExpr='mcmc_output <- MHmcmc(flu_data, initial_states, likelihood_function, prior_function, mcmc_options, initial_parameters)')
+  Hint: Copy and paste the expression into the command liine

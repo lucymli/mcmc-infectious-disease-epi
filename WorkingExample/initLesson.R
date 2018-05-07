@@ -22,4 +22,12 @@ load(paste0(base_path, "/flu_plots.RData"), base_env)
 
 SIR <- base_env$SIR
 
-set.seed(8373729)
+MHmcmc <- base_env$MHmcmc
+flu_data <- base_env$flu_data
+initial_states <- base_env$flu_initial_states
+likelihood_function <- base_env$flu_likelihood
+prior_function <- base_env$flu_priors
+mcmc_options <- base_env$flu_mcmc_options
+initial_parameters <- base_env$flu_parameters
+mcmc_output <- base_env$flu_mcmc_output
+
