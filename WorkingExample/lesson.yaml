@@ -50,9 +50,9 @@
 
 - Class: figure
   Output: >
-  To estimate the parameters, we can run mcmc_output <- MHmcmc(flu_data, initial_states, likelihood_function, prior_function, mcmc_options, initial_parameters). 
-  You have already seen the likelihood_function and prior_function in previous questions. Let's have a look at the data, which is from a 
-  1978 outbreak of influenza in a boarding school in England.
+    To estimate the parameters, we can run mcmc_output <- MHmcmc(flu_data, initial_states, likelihood_function, prior_function, mcmc_options, initial_parameters). 
+    You have already seen the likelihood_function and prior_function in previous questions. Let's have a look at the data, which is from a 
+    1978 outbreak of influenza in a boarding school in England.
   Figure: flu_data_draw.R
   FigureType: new
   
