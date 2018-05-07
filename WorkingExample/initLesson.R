@@ -21,3 +21,5 @@ load(paste0(base_path, "/initial.RData"), base_env)
 load(paste0(base_path, "/flu_plots.RData"), base_env)
 
 SIR <- base_env$SIR
+
+set.seed(8373729)
