@@ -42,14 +42,17 @@
    the prior probability of parameters. The overall prior probability is equal to 
    log(prior probability of beta) + log(prior probability of gamma). Complete the
    'return()' line so that the function returns the overall prior probability.
+   When you are ready to submit, save the script and then type submit().
+   If you want to start over, type reset().
   AnswerTests: test_prior()
   Hint: Follow the directions in the script. You might need the dpois() and sum() functions.
   Script: prior.R
 
-- Class: cmd_question
+- Class: figure
   Output: >
-    Now let's try estimating some parameters using MCMC. We need 6 pieces of information.
-    Type the following into the command line 
-    mcmc_output <- MHmcmc(flu_data, initial_states, likelihood_function, prior_function, mcmc_options, initial_parameters)
-  AnswerTests: omnitest(correctExpr='mcmc_output <- MHmcmc(flu_data, initial_states, likelihood_function, prior_function, mcmc_options, initial_parameters)')
-  Hint: Copy and paste the expression into the command liine
+  To estimate the parameters, we can run mcmc_output <- MHmcmc(flu_data, initial_states, likelihood_function, prior_function, mcmc_options, initial_parameters). 
+  You have already seen the likelihood_function and prior_function in previous questions. Let's have a look at the data, which is from a 
+  1978 outbreak of influenza in a boarding school in England.
+  Figure: flu_data_draw.R
+  FigureType: new
+  
