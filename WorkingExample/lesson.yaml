@@ -145,7 +145,7 @@
   Hint: Copy and paste the expression from the question into the command line
 
 - Class: cmd_question
-  Output: "We can summarize our findings in terms of the mean and 95\% credible intervals.\nType mean(mcmc_output_noburnin$R0) in the command line."
+  Output: "We can summarize our findings in terms of the mean and 95% credible intervals.\nType mean(mcmc_output_noburnin$R0) in the command line."
   CorrectAnswer: mean(mcmc_output_noburnin$R0)
   AnswerTests: omnitest(correctExpr='mean(mcmc_output_noburnin$R0)')
   Hint: Copy and paste the expression from the question into the command line
@@ -181,7 +181,7 @@
   Hint: Remember to round to 4 decimal places.
 
 - Class: cmd_question
-  Output: "An alternative way is by calculating the 2.5 and 97.5\% sample quantiles, making no prior assumptions about the statistical distribution of the posterior. Type \nquantile(mcmc_output_noburnin$R0, c(0.025, 0.975)) \nin the command line."
+  Output: "An alternative way is by calculating the 2.5 and 97.5% sample quantiles, making no prior assumptions about the statistical distribution of the posterior. Type \nquantile(mcmc_output_noburnin$R0, c(0.025, 0.975)) \nin the command line."
   CorrectAnswer: quantile(mcmc_output_noburnin$R0, c(0.025, 0.975))
   AnswerTests: omnitest(correctExpr='quantile(mcmc_output_noburnin$R0, c(0.025, 0.975))')
   Hint: Copy and paste the expression from the question into the command line
@@ -193,7 +193,7 @@
   Hint: Remember to round to 4 decimal places.
 
 - Class: cmd_question
-  Output: "Finally, we can calculate the credible interval using the highest probability density (HPD) method. Type \nHPDinterval(mcmc(mcmc_output_noburnin$R0)) \nin the command line.""
+  Output: "Finally, we can calculate the credible interval using the highest probability density (HPD) method. Type \nHPDinterval(mcmc(mcmc_output_noburnin$R0)) \nin the command line."
   CorrectAnswer: HPDinterval(mcmc(mcmc_output_noburnin$R0))
   AnswerTests: omnitest(correctExpr='HPDinterval(mcmc(mcmc_output_noburnin$R0))')
   Hint: Copy and paste the expression from the question into the command line
