@@ -86,7 +86,7 @@
    If you want to start over, type reset().
    You can always skip a question by typing skip().
   AnswerTests: test_prior()
-  Hint: Follow the directions in the script. You might need the dpois() and sum() functions.
+  Hint: Follow the directions in the script. Remember to add not multiple log-transformed probabilities.
   Script: prior.R
   
 - Class: text
