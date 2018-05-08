@@ -20,8 +20,9 @@
   Output: >
     The basic reproductive number (R0) cannot be measured directly from this time series data. We need to fit a transmission 
     model to this data set to figure out what the R0 is. This involves estimating the values of parameters in an SIR model 
-    i.e. transmission rate beta, and recovery rate gamma. We can do explore the parameter space using the 
-    MCMC algorithm described in the class. Press enter to continue.
+    i.e. transmission rate beta, and recovery rate gamma. We can explore the parameter space using the 
+    MCMC algorithm described in the class.
+    Press Enter to continue.
 
 - Class: cmd_question
   Output: >
@@ -34,8 +35,8 @@
 - Class: mult_question
   Output: >
     In line 24, the algorithm decides whether to accept newly proposed parameter values based on the ratio 
-    of posterior probabilities. What would be the value of accepted if the posterior probability of proposed parameter values is greater than that of 
-    current parameter values? (Type 1 or 2)
+    of posterior probabilities. What would be the value of `accepted' if the posterior probability of 
+    the proposed parameter values is greater than that of current parameter values? (Type 1 or 2)
   AnswerChoices: TRUE;FALSE
   CorrectAnswer: TRUE
   AnswerTests: omnitest(correctVal='TRUE')
@@ -88,14 +89,12 @@
   Hint: Follow the directions in the script. You might need the dpois() and sum() functions.
   Script: prior.R
   
-- Class: video
+- Class: text
   Output: >
     Now that we have our data, likelihood function, and prior function, we can run the MCMC algorithm.
     In the interest of time (and in case something invariably goes wrong), 
     we are not actually going to run the algorithm in class.
     Just for your reference, you can see full script used to analyze this data set on my Github at github.com/lucymli/mcmc-infectious-disease-epi/blob/master/WorkingExample/create-data.R
-    Do you want to open that file now?
-  VideoLink: github.com/lucymli/mcmc-infectious-disease-epi/blob/master/WorkingExample/create-data.R
 
 
 - Class: cmd_question

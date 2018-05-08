@@ -2,6 +2,7 @@
 ## TASK: Complete the flu_likelihood() function to calculate the probability
 ## of observing the data D(t) given the expected prevalence I(t) for the
 ## current parameter values. Assume that D(t) ~ Poisson (I(t)).
+## Your answer should look something like sum(dpois(, , log=TRUE))
 ###########################################################################
 
 library(deSolve)
@@ -19,7 +20,7 @@ flu_likelihood <- function (params, data, initial_states) {
   # expected number of infected individuals I(t) ('expected_I') for a set of 
   # parameters and initial conditions.
   expected_I <- ode(initial_states, times, SIR, params)[, 3]
-  # COMPLETE LIKELIHOOD CALCULATION BELOW (Answer should be log-transformed)
+  # COMPLETE LIKELIHOOD CALCULATION BELOW
   log_likelihood <- 
   return (log_likelihood)
 }
