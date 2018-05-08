@@ -1,15 +1,15 @@
 MHmcmc <- function (data, initial_states, calc_likelihood, calc_prior, mcmc_options, parameters) {
   # Initialize parameters
   init_params <- parameters
-  # Calculate likelihood and prior of initial parameters
-  init_llik <- calc_likelihood(init_params, data, initial_states)
-  init_lprior <- calc_prior(init_params)
   # Initialize log
   max_log_iter <- floor(mcmc_options$niter/mcmc_options$log_every)
   parameter_log <- data.frame(iter=seq(1, by=mcmc_options$log_every, length.out=max_log_iter),
                               posterior=NA, prior=NA, likelihood=NA, acceptance=1,
                               t(replicate(max_log_iter, init_params)))
   parameter_log[1, names(init_params)] <- init_params
+  # Calculate likelihood and prior of initial parameters
+  init_llik <- calc_likelihood(init_params, data, initial_states)
+  init_lprior <- calc_prior(init_params)
   parameter_log[1, c("posterior", "prior", "likelihood")] <- 
     c(init_llik+init_lprior, init_lprior, init_llik)
   total_accepted <- 0
