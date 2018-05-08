@@ -1,7 +1,7 @@
 ###########################################################################
 ## TASK: Complete the flu_priors() function to calculate the prior probability
 ## of parameters beta and gamma.
-## Your answer be typed within the parentheses in return ()
+## Your answer should be typed within the parentheses in return ()
 ###########################################################################
 flu_priors <- function (params) {
   log_beta_prior <- dunif(params[["beta"]], min=0, max=10, log=TRUE)
