@@ -4,8 +4,8 @@
 ## Your answer be typed within the parentheses in return ()
 ###########################################################################
 flu_priors <- function (params) {
-  beta_prior <- dunif(params[["beta"]], min=0, max=10, log=TRUE)
-  gamma_prior <- dlnorm(1/params[["gamma"]], meanlog=1.8, sdlog=0.5, log=TRUE)
+  log_beta_prior <- dunif(params[["beta"]], min=0, max=10, log=TRUE)
+  log_gamma_prior <- dlnorm(1/params[["gamma"]], meanlog=1.8, sdlog=0.5, log=TRUE)
   # COMPLETE THE LINE BELOW
-  return (beta_prior+gamma_prior)
+  return (log_beta_prior+log_gamma_prior)
 }
