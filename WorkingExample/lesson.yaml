@@ -8,10 +8,8 @@
 
 
 - Class: cmd_question
-  Output: >
-    Let's have a look at a data set collected during an outbreak of 
-    influenza in a boarding school in England at the beginning of 1978.
-    Type plot_data() in the command line.
+  Output: "Let's have a look at a data set collected during an outbreak of 
+    influenza in a boarding school in England at the beginning of 1978.\nType plot_data() in the command line."
   CorrectAnswer: plot_data()
   AnswerTests: omnitest(correctExpr='plot_data()')
   Hint: Copy and paste the expression from the question into the command line
@@ -25,9 +23,7 @@
     Press Enter to continue.
 
 - Class: cmd_question
-  Output: >
-    Let's have a look at an MCMC algorithm. 
-    Type open_mcmc_file() in the command line
+  Output: "Let's have a look at an MCMC algorithm.\nType open_mcmc_file() in the command line"
   CorrectAnswer: open_mcmc_file()
   AnswerTests: omnitest(correctExpr='open_mcmc_file()')
   Hint: Copy and paste the expression from the question into the command line
@@ -98,19 +94,13 @@
 
 
 - Class: cmd_question
-  Output: >
-    So let's look at some results I prepared earlier.
-    Type head(mcmc_output) in the command line to have a look at the output of the MCMC algorithm.
+  Output: "So let's look at some results I prepared earlier.\nType head(mcmc_output) in the command line to have a look at the output of the MCMC algorithm."
   CorrectAnswer: head(mcmc_output)
   AnswerTests: omnitest(correctExpr='head(mcmc_output)')
   Hint: Copy and paste the expression from the question into the command line
 
 - Class: cmd_question
-  Output: >
-    As you can see, the last two columns contain the parameter values sampled from the joint posterior distribution using MCMC.
-    The first step in analyzing MCMC results is to determine if the algorithm has converged, which means the algorithm
-    has found the stationary distribution of interest.
-    We can check this visually. Type ggplot(mcmc_output, aes(x=iter, y=beta)) + geom_line() in the command line.
+  Output: "As you can see, the last two columns contain the parameter values sampled from the joint posterior distribution using MCMC. The first step in analyzing MCMC results is to determine if the algorithm has converged, which means the algorithm  has found the stationary distribution of interest. We can check this visually. Type \nggplot(mcmc_output, aes(x=iter, y=beta)) + geom_line()\nin the command line."
   CorrectAnswer: ggplot(mcmc_output, aes(x=iter, y=beta)) + geom_line()
   AnswerTests: omnitest(correctExpr='ggplot(mcmc_output, aes(x=iter, y=beta)) + geom_line()')
   Hint: Copy and paste the expression from the question into the command line
@@ -123,18 +113,13 @@
   Hint: Copy and paste the expression from the question into the command line
   
 - Class: cmd_question
-  Output: >
-    As you can see, the parameter samples in the initial ('burn-in') period are not distributed according to the posterior distribution, and are affected by the initial conditions.
-    To only analyze samples that were drawn from the posterior distribution, we need to get rid of the samples from the start.
-    Type mcmc_output_noburnin <- slice(mcmc_output, seq(-1, -500)) in the command line.
+  Output: "As you can see, the parameter samples in the initial ('burn-in') period are not distributed according to the posterior distribution, and are affected by the initial conditions. To only analyze samples that were drawn from the posterior distribution, we need to get rid of the samples from the start. \nType mcmc_output_noburnin <- slice(mcmc_output, seq(-1, -500)) in the command line."
   CorrectAnswer: mcmc_output_noburnin <- slice(mcmc_output, seq(-1, -500))
   AnswerTests: omnitest(correctExpr='mcmc_output_noburnin <- slice(mcmc_output, seq(-1, -500))')
   Hint: Copy and paste the expression from the question into the command line
 
 - Class: cmd_question
-  Output: >
-    Now let's look at the marginal posterior distributions of parameters.
-    Type ggplot(mcmc_output_noburnin, aes(x=beta)) + geom_histogram(aes(y=..density..)) + geom_density(aes(y=..density..)) in the command line.
+  Output: "Now let's look at the marginal posterior distributions of parameters. \nType ggplot(mcmc_output_noburnin, aes(x=beta)) + geom_histogram(aes(y=..density..)) + geom_density(aes(y=..density..)) in the command line."
   CorrectAnswer: ggplot(mcmc_output_noburnin, aes(x=beta)) + geom_histogram(aes(y=..density..)) + geom_density(aes(y=..density..))
   AnswerTests: omnitest(correctExpr='ggplot(mcmc_output_noburnin, aes(x=beta)) + geom_histogram(aes(y=..density..)) + geom_density(aes(y=..density..))')
   Hint: Copy and paste the expression from the question into the command line
@@ -147,9 +132,7 @@
   Hint: Copy and paste the expression from the question into the command line
 
 - Class: cmd_question
-  Output: >
-    The parameter we are most interested in is R0. To calculate this, let's first create a new variable called R0.
-    Type mcmc_output_noburnin <- mutate(mcmc_output_noburnin, R0 = beta*760/gamma) in the command line.
+  Output: "The parameter we are most interested in is R0. To calculate this, let's first create a new variable called R0.\nType mcmc_output_noburnin <- mutate(mcmc_output_noburnin, R0 = beta*760/gamma) in the command line."
   CorrectAnswer: mcmc_output_noburnin <- mutate(mcmc_output_noburnin, R0 = beta*760/gamma)
   AnswerTests: omnitest(correctExpr='mcmc_output_noburnin <- mutate(mcmc_output_noburnin, R0 = beta*760/gamma)')
   Hint: Copy and paste the expression from the question into the command line
@@ -162,9 +145,7 @@
   Hint: Copy and paste the expression from the question into the command line
 
 - Class: cmd_question
-  Output: >
-    We can summarize our findings in terms of the mean and 95\% credible intervals. 
-    Type mean(mcmc_output_noburnin$R0) in the command line.
+  Output: "We can summarize our findings in terms of the mean and 95\% credible intervals.\nType mean(mcmc_output_noburnin$R0) in the command line."
   CorrectAnswer: mean(mcmc_output_noburnin$R0)
   AnswerTests: omnitest(correctExpr='mean(mcmc_output_noburnin$R0)')
   Hint: Copy and paste the expression from the question into the command line
@@ -176,9 +157,7 @@
   Hint: Remember to round to 2 decimal places.
 
 - Class: cmd_question
-  Output: >
-    There are several ways to quantify the uncertainty. Let us first calculate the standard deviation. 
-    Type sd(mcmc_output_noburnin$R0) in the command line.
+  Output: "There are several ways to quantify the uncertainty. Let us first calculate the standard deviation. \nType sd(mcmc_output_noburnin$R0) in the command line."
   CorrectAnswer: sd(mcmc_output_noburnin$R0)
   AnswerTests: omnitest(correctExpr='sd(mcmc_output_noburnin$R0)')
   Hint: Copy and paste the expression from the question into the command line
@@ -190,9 +169,7 @@
   Hint: Remember to round to 4 decimal places.
 
 - Class: cmd_question
-  Output: >
-    We can use the standard deviation to calculate the credible intervals assuming that the posterior distribution follows a Gaussian.
-    Type with(mcmc_output_noburnin, mean(R0)+qnorm(c(0.025, 0.975))*sd(R0)/sqrt(length(R0))) in the commmand line.
+  Output: "We can use the standard deviation to calculate the credible intervals assuming that the posterior distribution follows a Gaussian. Type \nwith(mcmc_output_noburnin, mean(R0)+qnorm(c(0.025, 0.975))*sd(R0)/sqrt(length(R0))) \nin the commmand line."
   CorrectAnswer: with(mcmc_output_noburnin, mean(R0)+qnorm(c(0.025, 0.975))*sd(R0)/sqrt(length(R0)))
   AnswerTests: omnitest(correctExpr='with(mcmc_output_noburnin, mean(R0)+qnorm(c(0.025, 0.975))*sd(R0)/sqrt(length(R0)))')
   Hint: Copy and paste the expression from the question into the command line
@@ -204,9 +181,7 @@
   Hint: Remember to round to 4 decimal places.
 
 - Class: cmd_question
-  Output: >
-    An alternative way is by calculating the 2.5 and 97.5\% sample quantiles, making no prior assumptions about the statistical distribution of the posterior.
-    Type quantile(mcmc_output_noburnin$R0, c(0.025, 0.975)) in the command line.
+  Output: "An alternative way is by calculating the 2.5 and 97.5\% sample quantiles, making no prior assumptions about the statistical distribution of the posterior. Type \nquantile(mcmc_output_noburnin$R0, c(0.025, 0.975)) \nin the command line."
   CorrectAnswer: quantile(mcmc_output_noburnin$R0, c(0.025, 0.975))
   AnswerTests: omnitest(correctExpr='quantile(mcmc_output_noburnin$R0, c(0.025, 0.975))')
   Hint: Copy and paste the expression from the question into the command line
@@ -218,11 +193,9 @@
   Hint: Remember to round to 4 decimal places.
 
 - Class: cmd_question
-  Output: >
-    Finally, we can calculate the credible interval using the highest probability density (HPD) method.
-    Type HPDinterval(mcmc(mcmc_output_noburnin$R0)) in the command line.
-  CorrectAnswer: quantile(mcmc_output_noburnin$R0, c(0.025, 0.975))
-  AnswerTests: omnitest(correctExpr='quantile(mcmc_output_noburnin$R0, c(0.025, 0.975))')
+  Output: "Finally, we can calculate the credible interval using the highest probability density (HPD) method. Type \nHPDinterval(mcmc(mcmc_output_noburnin$R0)) \nin the command line.""
+  CorrectAnswer: HPDinterval(mcmc(mcmc_output_noburnin$R0))
+  AnswerTests: omnitest(correctExpr='HPDinterval(mcmc(mcmc_output_noburnin$R0))')
   Hint: Copy and paste the expression from the question into the command line
 
 - Class: exact_question
