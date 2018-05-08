@@ -1,7 +1,7 @@
 ###########################################################################
 ## TASK: Complete the flu_likelihood() function to calculate the probability
-## of observing the data D(t) given the expected prevalence I(t) for the
-## current parameter values. Assume that D(t) ~ Poisson (I(t)).
+## of observing the data given the expected prevalence (expected_I) for the
+## current parameter values. Assume that data ~ Poisson (expected_I).
 ## Your answer should look something like sum(dpois(, , log=TRUE))
 ###########################################################################
 
